@@ -1,0 +1,65 @@
+{% extends 'main.html' %}
+
+{% block title %}Kurakani | Profile - {{user}}{% endblock %}
+
+{% block content %}
+{% include 'nav.html' %}
+<main class="profile-page layout layout--3">
+    <div class="container">
+    <!-- Topics Start -->
+    <div class="topics">
+        {% include 'topic_component.html' %}
+    </div>
+    <!-- Topics End -->
+
+    <!-- Room List Start -->
+
+    <div class="roomList">
+        <div class="profile">
+        <div class="profile__avatar">
+            {% if user.is_active %}
+            <div class="avatar avatar--large active">
+                    <img src="{{user.avatar.url}}" />
+            </div>
+            {% else %}
+            <div class="avatar avatar--large">
+                    <img src="{{user.avatar.url}}" />
+            </div>
+            {% endif %}
+        </div>
+        <div class="profile__info">
+            <h3> {{user.name}} </h3>
+            <p>@{{user.username}}</p>
+            {% if user == request.user %}
+            <a href="{% url 'update-user' user.id %}" class="btn btn--main btn--pill">Edit Profile</a>
+            {% endif %}
+        </div>
+        <div class="profile__about">
+            <h3>About</h3>
+            <p>
+            {{user.bio}}
+            </p>
+        </div>
+        </div>
+
+        <div class="roomList__header">
+        <div>
+            <h2>Study Rooms Hosted by {{user.name}}</a>
+            </h2>
+        </div>
+        
+        </div>
+        
+        {% include 'feed_component.html' %}
+        
+    </div>
+    <!-- Room List End -->
+
+    <!-- Activities Start -->
+    <div class="activities">
+        {% include 'activity_component.html' %}
+    </div>
+    <!-- Activities End -->
+    </div>
+</main>
+{% endblock %}
